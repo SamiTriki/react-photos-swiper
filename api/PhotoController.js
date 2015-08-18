@@ -1,29 +1,29 @@
 var restify = require('restify');
 var server = restify.createServer();
 
-var retreive = require('./utils/retreive');
+var retrieve = require('./utils/retrieve');
 var conf = require('./config.js');
 
 server.use(restify.bodyParser());
 
 exports.init = function(req, res, next) {
-    retreive.directoryList(conf.directory).then(function(list) {
-        res.send(retreive.display(list, 0));
+    retrieve.directoryList(conf.directory).then(function(list) {
+        res.send(retrieve.display(list, 0));
         next();
     });
 
 };
 
 exports.pick = function (req, res, next) {
-    retreive.directoryList(conf.directory).then(function(list) {
-        res.send(retreive.pick(list, req.params.index));
+    retrieve.directoryList(conf.directory).then(function(list) {
+        res.send(retrieve.pick(list, req.params.index));
         next();
     });
 };
 
 exports.pass = function (req, res, next) {
-    retreive.directoryList(conf.directory).then(function(list) {
-        res.send(retreive.pass(list, req.params.index));
+    retrieve.directoryList(conf.directory).then(function(list) {
+        res.send(retrieve.pass(list, req.params.index));
         next();
     });
 };
