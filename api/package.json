@@ -1,0 +1,15 @@
+{
+  "name": "photo-swiper-api",
+  "version": "1.0.0",
+  "description": "Api for soft deleting a list of photos with a folder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sami Triki",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.34",
+    "restify": "^4.0.0"
+  }
+}
