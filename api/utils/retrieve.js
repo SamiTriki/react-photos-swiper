@@ -21,8 +21,10 @@ exports.directoryList = function(dir) {
 exports.pick = function(list, idx) {
     var dir = list.directory;
 
-    fs.rename(dir + '/' + list.files[idx], conf.picked_photos + list.files[idx], function(err) {
-        if (err) console.log(err);
+    //copy the tile
+    fs.createReadStream(dir + '/' + list.files[idx])
+        .pipe(fs.createWriteStream(conf.picked_photos + list.files[idx]), function(err) {
+
     });
 
     var nextImg = dir + '/' + list.files[idx + 1];
@@ -39,7 +41,7 @@ exports.pass = function(list, idx) {
 
 exports.display = function(list, idx) {
     var path = list.directory + '/' + list.files[idx];
-    return {url: path, index: idx};
+    return {url: path, index: idx, nbFiles: list.nbFiles};
 };
 
 

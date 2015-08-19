@@ -16,14 +16,15 @@ exports.init = function(req, res, next) {
 
 exports.pick = function (req, res, next) {
     retrieve.directoryList(conf.directory).then(function(list) {
-        res.send(retrieve.pick(list, req.params.index));
+        console.log('index', parseInt(req.params.index));
+        res.send(retrieve.pick(list, parseInt(req.params.index)));
         next();
     });
 };
 
 exports.pass = function (req, res, next) {
     retrieve.directoryList(conf.directory).then(function(list) {
-        res.send(retrieve.pass(list, req.params.index));
+        res.send(retrieve.pass(list, parseInt(req.params.index)));
         next();
     });
 };
