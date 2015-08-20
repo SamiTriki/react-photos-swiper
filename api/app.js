@@ -1,13 +1,24 @@
 var restify = require('restify');
-var server = restify.createServer();
+var httpServer = restify.createServer();
+var staticFiles = require('node-static');
 var Photo = require('./PhotoController');
+var conf = require('./config.js');
+var fileServer = new staticFiles.Server(conf.directory);
 
-server.use(restify.bodyParser());
+httpServer.use(restify.bodyParser());
 
-server.get('/photo', Photo.init);
-server.post('/photo/pick', Photo.pick);
-server.post('/photo/pass', Photo.pass);
+httpServer.get('/photo', Photo.init);
+httpServer.post('/photo/pick', Photo.pick);
+httpServer.post('/photo/pass', Photo.pass);
 
-server.listen(8080, function() {
-  console.log('%s listening at %s', server.name, server.url);
+httpServer.listen(conf.httpPort, function() {
+
 });
+
+ 
+
+require('http').createServer(function (request, response) {
+    request.addListener('end', function () {
+        fileServer.serve(request, response);
+    }).resume();
+}).listen(conf.filesPort);

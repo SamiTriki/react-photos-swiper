@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^2.9.34",
+    "node-static": "^0.7.7",
     "restify": "^4.0.0"
   }
 }

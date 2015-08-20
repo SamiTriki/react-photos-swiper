@@ -15,15 +15,6 @@ var {
 var clamp = require('clamp');
 var api = require('../helpers/api');
 
-
-const People = [
-  'red',
-  'green',
-  'blue',
-  'purple',
-  'orange',
-]
-
 var SWIPE_THRESHOLD = 120;
 
 class Flix extends React.Component {
@@ -33,18 +24,8 @@ class Flix extends React.Component {
     this.state = {
       pan: new Animated.ValueXY(),
       enter: new Animated.Value(0.5),
-      person: People[0],
       Photo: this.props.Photo
     }
-  }
-
-  _goToNextPerson() {
-    let currentPersonIdx = People.indexOf(this.state.person);
-    let newIdx = currentPersonIdx + 1;
-
-    this.setState({
-      person: People[newIdx > People.length - 1 ? 0 : newIdx]
-    });
   }
 
   componentDidMount() {
@@ -125,7 +106,6 @@ class Flix extends React.Component {
   _resetState() {
     this.state.pan.setValue({x: 0, y: 0});
     this.state.enter.setValue(0);
-    this._goToNextPerson();
     this._animateEntrance();
   }
 
@@ -149,10 +129,11 @@ class Flix extends React.Component {
     let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.card, animatedCardStyles, {backgroundColor: this.state.person}]} {...this._panResponder.panHandlers}>
+        <Text style={styles.letexte}>url: {'http://10.0.1.194:9996/' + this.state.Photo.url}</Text>
+        <Animated.View style={[styles.card, animatedCardStyles]} {...this._panResponder.panHandlers}>
           <Image
             style={styles.Photo}
-            source={{uri: this.state.Photo.url}} />
+            source={{uri: 'http://10.0.1.194:9996/' + this.state.Photo.url}} />
         </Animated.View>
 
         <Animated.View style={[styles.nope, animatedNopeStyles]}>
@@ -175,9 +156,10 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   card: {
-    width: 200,
+    alignItems: 'stretch',
+    width: 350,
     height: 200,
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
   },
   yup: {
     borderColor: 'green',
@@ -187,6 +169,10 @@ var styles = StyleSheet.create({
     bottom: 20,
     borderRadius: 5,
     right: 20,
+  },
+  letexte: {
+    fontSize: 20,
+    top: 1
   },
   yupText: {
     fontSize: 16,
@@ -206,8 +192,8 @@ var styles = StyleSheet.create({
     color: 'red',
   },
   Photo: {
-    height: 200,
-    width: 200
+    resizeMode:Image.resizeMode.ratio, 
+    flex: 1
   }
 });
 
