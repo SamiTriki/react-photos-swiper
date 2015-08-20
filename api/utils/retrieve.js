@@ -20,11 +20,10 @@ exports.directoryList = function(dir) {
 
 exports.pick = function(list, idx) {
     var dir = list.directory;
+    var photoToFetch = (idx === -1) ? list.files.length -1 : idx; // keep last picture as ref
 
-    //copy the tile
-    fs.createReadStream(dir + '/' + list.files[idx])
-        .pipe(fs.createWriteStream(conf.picked_photos + list.files[idx]), function(err) {
-
+    fs.createReadStream(dir + '/' + list.files[photoToFetch])
+        .pipe(fs.createWriteStream(conf.picked_photos + list.files[photoToFetch]), function(err) {
     });
 
     var nextImg = dir + '/' + list.files[idx + 1];
