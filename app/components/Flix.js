@@ -9,6 +9,7 @@ var {
   Animated,
   Component,
   PanResponder,
+  Image
 } = React;
 
 var clamp = require('clamp');
@@ -26,13 +27,14 @@ const People = [
 var SWIPE_THRESHOLD = 120;
 
 class Flix extends React.Component {
+
   constructor(props) {
     super(props);
-
     this.state = {
       pan: new Animated.ValueXY(),
       enter: new Animated.Value(0.5),
       person: People[0],
+      Photo: this.props.Photo
     }
   }
 
@@ -56,6 +58,21 @@ class Flix extends React.Component {
     ).start();
   }
 
+  pick(idx) {
+    return api.pick(idx).then((photo) => {
+      this.setState({
+        Photo: photo
+      })
+    });
+  }
+
+  pass(idx) {
+    return api.pass(idx).then((photo) => {
+      this.setState({
+        Photo: photo
+      })
+    });
+  }
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
@@ -81,6 +98,11 @@ class Flix extends React.Component {
         }
 
         if (Math.abs(this.state.pan.x._value) > SWIPE_THRESHOLD) {
+          if(this.state.pan.x._value > 0) {
+            this.pick(this.state.Photo.index)
+          } else {
+            this.pass(this.state.Photo.index)
+          }
           Animated.decay(this.state.pan.x, {
             velocity: velocity,
             deceleration: 0.98,
@@ -125,18 +147,20 @@ class Flix extends React.Component {
     let nopeOpacity = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0]});
     let nopeScale = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0.5], extrapolate: 'clamp'});
     let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
-
     return (
       <View style={styles.container}>
         <Animated.View style={[styles.card, animatedCardStyles, {backgroundColor: this.state.person}]} {...this._panResponder.panHandlers}>
+          <Image
+            style={styles.Photo}
+            source={{uri: this.state.Photo.url}} />
         </Animated.View>
 
         <Animated.View style={[styles.nope, animatedNopeStyles]}>
-          <Text style={styles.nopeText}>Nope!</Text>
+          <Text style={styles.nopeText}>NTM!</Text>
         </Animated.View>
 
         <Animated.View style={[styles.yup, animatedYupStyles]}>
-          <Text style={styles.yupText}>Yup!</Text>
+          <Text style={styles.yupText}>Good!</Text>
         </Animated.View>
       </View>
     );
@@ -180,7 +204,15 @@ var styles = StyleSheet.create({
   nopeText: {
     fontSize: 16,
     color: 'red',
+  },
+  Photo: {
+    height: 200,
+    width: 200
   }
 });
+
+Flix.propTypes = {
+    Photo: React.PropTypes.object.isRequired
+}
 
 module.exports = Flix;
