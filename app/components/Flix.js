@@ -129,8 +129,11 @@ class Flix extends React.Component {
     let nopeScale = pan.x.interpolate({inputRange: [-150, 0], outputRange: [1, 0.5], extrapolate: 'clamp'});
     let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
     return (
+
       <View style={styles.container}>
-        <Text style={styles.letexte}>url: {this.state.Photo.url}</Text>
+        <View style={styles.debugWindow}>
+          <Text style={styles.debugText}>{JSON.stringify(this.state.Photo)}</Text>
+        </View>
         <Animated.View style={[styles.card, animatedCardStyles]} {...this._panResponder.panHandlers}>
           <Image
             style={styles.Photo}
@@ -156,6 +159,21 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  debugWindow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FF0052',
+    opacity: 0.4,
+    height: 150,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    padding: 10
+  },
+  debugText: {
+    fontSize: 12,
+    color: '#FFF'
+  },
   card: {
     alignItems: 'stretch',
     width: 350,
@@ -170,10 +188,6 @@ var styles = StyleSheet.create({
     bottom: 20,
     borderRadius: 5,
     right: 20,
-  },
-  letexte: {
-    fontSize: 20,
-    top: 1
   },
   yupText: {
     fontSize: 16,

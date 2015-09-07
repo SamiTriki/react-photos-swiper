@@ -4,5 +4,5 @@ module.exports = {
     httpPort: 8080,
     picked_photos: '/Users/samitriki/Desktop/test/saved/',
     extname: ['.tif', '.png', '.gif', '.jpg', '.jpeg'],
-
+    debugMode: true
 };

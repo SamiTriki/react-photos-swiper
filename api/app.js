@@ -15,8 +15,6 @@ httpServer.listen(conf.httpPort, function() {
     console.log('listening on port: ' + conf.httpPort);
 });
 
- 
-
 require('http').createServer(function (request, response) {
     request.addListener('end', function () {
         fileServer.serve(request, response);
