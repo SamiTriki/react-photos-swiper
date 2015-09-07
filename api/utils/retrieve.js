@@ -26,19 +26,19 @@ exports.pick = function(list, idx) {
         .pipe(fs.createWriteStream(conf.picked_photos + list.files[photoToFetch]), function(err) {
     });
 
-    var nextImg =  `http://10.0.1.194:{conf.filesPort}/{list.files[idx + 1]}`;
+    var nextImg =  'http://10.0.1.194:' + conf.filesPort + '/' + list.files[idx + 1];
 
     return {url: encodeURI(nextImg), index: idx +1};
 };
 
 exports.pass = function(list, idx) {
     var dir = list.directory;
-    var nextImg =  http://10.0.1.194:{conf.filesPort}/{list.files[idx + 1]}`;
+    var nextImg =  'http://10.0.1.194:' + conf.filesPort + '/' + list.files[idx + 1];
     return {url: encodeURI(nextImg), index: idx +1};
 };
 
 exports.display = function(list, idx) {
-    var path = `http://`10.0.1.194:{conf.filesPort}/{list.files[idx]}`;
+    var path = 'http://10.0.1.194:' + conf.filesPort + '/' + list.files[idx];
     return {url: encodeURI(path), index: idx, nbFiles: list.nbFiles};
 };
 

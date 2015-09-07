@@ -12,7 +12,7 @@ httpServer.post('/photo/pick', Photo.pick);
 httpServer.post('/photo/pass', Photo.pass);
 
 httpServer.listen(conf.httpPort, function() {
-
+    console.log('listening on port: ' + conf.httpPort);
 });
 
  

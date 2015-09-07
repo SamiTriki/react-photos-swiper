@@ -54,6 +54,7 @@ class Flix extends React.Component {
       })
     });
   }
+  
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
@@ -129,11 +130,11 @@ class Flix extends React.Component {
     let animatedNopeStyles = {transform: [{scale: nopeScale}], opacity: nopeOpacity}
     return (
       <View style={styles.container}>
-        <Text style={styles.letexte}>url: {'http://10.0.1.194:9996/' + this.state.Photo.url}</Text>
+        <Text style={styles.letexte}>url: {this.state.Photo.url}</Text>
         <Animated.View style={[styles.card, animatedCardStyles]} {...this._panResponder.panHandlers}>
           <Image
             style={styles.Photo}
-            source={{uri: 'http://10.0.1.194:9996/' + this.state.Photo.url}} />
+            source={{uri: this.state.Photo.url}} />
         </Animated.View>
 
         <Animated.View style={[styles.nope, animatedNopeStyles]}>

@@ -32,6 +32,9 @@ class react_photos_swiper extends React.Component {
         },
         loaded: true
       });
+    })
+    .catch((err) => {
+      alert(err);
     });
   }
 
@@ -40,8 +43,7 @@ class react_photos_swiper extends React.Component {
       return (
         <NavigatorIOS
           style={styles.container}
-          initialRoute={this.state.initialRoute}
-        />
+          initialRoute={this.state.initialRoute}/>
       );
     } else {
       return (<Text style={styles.loading}>loading</Text>);
